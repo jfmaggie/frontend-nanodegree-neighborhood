@@ -1,14 +1,26 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
         <title>Neighborhood</title>
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!--Google Map API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q"></script>
+
     </head>
     <body>
-    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyApjovSYHdzt-ARp3tZhfwje6bZTTLTriE
-    &q=Space+Needle,Seattle+WA" frameborder="0"></iframe>
+    <div class="container">
+        <div class="row" id="map-canvas">
+
+        </div>
+    </div>
+
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/knockout-3.3.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/map.js"></script>
     </body>
 </html>
