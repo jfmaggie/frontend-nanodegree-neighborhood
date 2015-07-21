@@ -1,5 +1,8 @@
  html, body, #map-canvas {
-        height: 500px;
-        margin: 20px;
-        padding: 0px
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
       }
+
+
+
