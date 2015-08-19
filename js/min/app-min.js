@@ -1,1 +1,0 @@
-function MapViewModel(){var i=this}ko.applyBindings(new MapViewModel);

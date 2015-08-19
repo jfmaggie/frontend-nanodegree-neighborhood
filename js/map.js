@@ -3,7 +3,7 @@ var infowindow;
 
 function initialize() {
     var mapOptions = {
-        center: new google.maps.LatLng(49.281834,-123.122557),
+        center: new google.maps.LatLng(49.281834, -123.122557),
         zoom: 14
     };
 
@@ -29,6 +29,7 @@ function callback(results, status) {
             createMarker(results[i]);
             // console.log('test!');
         }
+
     }
 }
 
