@@ -1,6 +1,9 @@
+// model : store data eg. when make ajax call
+
 var map;
 var infowindow;
 
+// viewmodel functions that initialize model.map
 function initialize() {
     var mapOptions = {
         center: new google.maps.LatLng(49.281834, -123.122557),

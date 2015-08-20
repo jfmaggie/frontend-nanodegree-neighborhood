@@ -4,5 +4,19 @@
         padding: 0px;
       }
 
+#search-area {
+    float: left;
+    margin-left: 2em;
+    margin-top: 2em;
 
+}
+#place-list {
+    float: right;
+    margin-right: 2em;
+    margin-top: 2em;
+}
+
+#map-canvas{
+    z-index: -1;
+}
 
