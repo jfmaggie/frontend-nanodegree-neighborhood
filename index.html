@@ -7,19 +7,10 @@
     <title>Neighborhood</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!--Google Map API -->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places"></script>
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/knockout-3.3.0.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/app.js"></script>
 </head>
 
 <body>
-    <div id="search-area">
-        <input class="controls" data-bind="value: test" />
-        <button>Search</button>
-    </div>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="place-list">
         <ul>
             <li>place1</li>
@@ -29,8 +20,14 @@
             <li>place5</li>
         </ul>
     </div>
-    <div id="map-canvas" class="container-fluid">
+    <div id="map-canvas">
     </div>
+    <!--Google Map API -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/knockout-3.3.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>
