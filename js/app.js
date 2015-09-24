@@ -1,73 +1,54 @@
-
-var map = new google.maps.Map(document.getElementById('map-canvas'),{
-    zoom: 8,
-    center: new google.maps.LatLng(49.2569332,-123.1239135),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-});
-
-// creat a search box and link it to the UI element
-var input = document.getElementById('pac-input');
-var searchbox = new google.maps.places.SearchBox(input);
-map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-// Bias the SearchBox results towards current map's viewport
-map.addListener('bounds_changed', function() {
-    searchbox.setBounds(map.getBounds());
-});
-
-var makers = [];
-// listen for the event
-searchbox.addListener('place_changed', function(){
-    var places = searchbox.getPlaces();
-    if(places.length=0){
-        return;
+function init(){
+    //display map
+    var map, marker=[], infowindow=[];
+    var myLatLng = {lat: 49.2569332, lng:  -123.1239135};
+    var mapOptions = {
+        center: myLatLng,
+        zoom: 12
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+    
+    //defalut places list
+    var places = [
+    {
+        'name': 'place1',
+        'loc': { lat: 49.2569332, lng: -123.1239135 }
+    },
+    { 
+        'name': 'place2',
+        'loc': { lat: 49.271048, lng: -123.145886 }
     }
+    ];
 
-    // clear out the old markers
-    markers.forEach(function(marker){
-        maker.setMap(null);
-    });
-    maker = [ ];
+    //create markers for places 
+    function addMarker(){
+    for(var i = 0; i < places.length; i++){
+        marker.push(new google.maps.Marker({
+            position: places[i].loc,
+            title: 'hello'
+        }));
+        marker[i].setMap(map);
+        }
+    }
+    addMarker();
 
-    // for each place, get the icon, name and locaiton
-    // todo: click on the place get the 3rd party api
-    var bounds = new google.maps.LatLngBounds();
-    place.forEach(function(place){
-        var icon = {
-            url: place.icon,
-            size: new google.maps.Size(70, 70),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaleSize: new google.maps.Size(25, 25)
+    //create info windows for markers
+    function addInfoWindows(){ 
+        function openCallback(i, m){
+        return function(){
+            i.open(map, m);
         };
-
-    // create a marker for each place
-    markers.push(new google.maps.Marker({
-        map: map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location
-    }));
-
-    if (place.geometry.viewport) {
-        bounds.union(place.geometry.viewport());
-    }else{
-        bounds.extend(place.geometry.location);
+        }
+        for(var i = 0; i < places.length; i++){
+        infowindow.push(new google.maps.InfoWindow({
+            content: places[i].name
+        }));
+        marker[i].addListener('click', openCallback(infowindow[i], marker[i]));
+        }
     }
-    });
-    map.fitBounds(bounds);
+    addInfoWindows();
 
-});
+}
 
+init();
 
-// viewmodel
-var viewModel= {
-
-};
-
-// Activates knokout.js
-$.ready(function() {
-
-    ko.applyBindings(viewModel);
-
-});
