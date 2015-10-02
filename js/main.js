@@ -1,8 +1,18 @@
 //the map model
 var mapModel = {
     mapOptions: {
-        center: {lat: 49.2569332, lng:  -123.1239135},
-        zoom: 13
+        center: {lat: 49.276960, lng: -123.111967 },
+        zoom: 13,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            mapTypeIds: [
+                google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.SATELLITE,
+                google.maps.MapTypeId.HYBRID
+            ]
+        }
     },
     //addMap: function return a map object
     addMap: function(mapid){
@@ -46,7 +56,8 @@ var placeModel = {
     }
     ],
 
-    //marker array
+    //marker array stores all the markers created
+    //by function addMarker
     markers: [],
     
     //infoWindow array
@@ -55,17 +66,28 @@ var placeModel = {
     addMarker: function(map){
         var self = this;
         for(var i = 0; i < self.places.length; i++){
-            var marker = new google.maps.Marker({
+            self.markers[i] = new google.maps.Marker({
             position: self.places[i].loc,
             map: map,
             title: self.places[i].name
             });
+
+            //make marker clickable, the following to be changed
+            self.addInfoWindow(self.markers[i], self.places[i].name);
         }
+        //console.log(self.markers);
     },
     
-    //marker event listener: Ajax call third party API 
-
-    addInfoWindow: function(){}
+    //click on marker to display infowindow
+    addInfoWindow: function(marker, message){
+        var infowindow = new google.maps.InfoWindow({
+            content: message
+        });
+        marker.addListener('click', function(){
+            //console.log('click on marker ya!');
+            infowindow.open(marker.get('map'), marker);
+        });
+    }
 };
 
 //ViewModel
