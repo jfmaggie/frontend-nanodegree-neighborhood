@@ -10,12 +10,13 @@
 </head>
 
 <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <button>Filter</button>
     <div id="place-list">
-        <ul>
-            <li>place1</li>
-            <li>place2</li>
+        <div>
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <button>Search</button>
+        </div>
+        <ul data-bind="foreach: places">
+            <li data-bind="text: $data.name"></li>
         </ul>
     </div>
     <div id="map-canvas">

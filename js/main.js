@@ -60,8 +60,6 @@ var placeModel = {
     //by function addMarker
     markers: [],
     
-    //infoWindow array
-
     //functions: addMarker, addInfoWindow
     addMarker: function(map){
         var self = this;
@@ -78,7 +76,7 @@ var placeModel = {
         //console.log(self.markers);
     },
     
-    //click on marker to display infowindow
+    //click on marker to display place name
     addInfoWindow: function(marker, message){
         var infowindow = new google.maps.InfoWindow({
             content: message
@@ -98,16 +96,34 @@ var ViewModel = {
         var mapID = document.getElementById('map-canvas');
         var map = mapModel.addMap(mapID);
 
-
         //add markers for places
         placeModel.addMarker(map);
-        
-    }
 
+        //activating knockout js
+        ko.applyBindings(new self.addPlaceList(placeModel.places));
+
+        //test update list
+        self.updatePlaceList(placeModel.places);
+
+    },
+    addPlaceList: function(placeList){
+        var self = this;
+        self.places = ko.observableArray(placeList);
+        //console.log('observable array test');
+
+        },
+
+    //filter place list, get list updated 
+    updatePlaceList: function(placelist){
+        var key = 'Mo';
+        for(var i = 0; i < placelist.length; i++){
+            if (key in placelist[i].name) { //search function... can not use in operator here!!!
+            console.log(placelist[i].name);
+            }
+        }
+    }
 };
 
-//activating knockout js
-ko.applyBindings(ViewModel);
 
 //app starts here: 
 ViewModel.init();
