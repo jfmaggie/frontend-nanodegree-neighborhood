@@ -12,7 +12,7 @@
 <body>
     <div id="place-list">
         <div>
-            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <input id="pac-input" class="controls" type="search" placeholder="Search" data-bind="value: query, valueUpdate: 'keyup'"> 
             <button>Search</button>
         </div>
         <ul data-bind="foreach: places">

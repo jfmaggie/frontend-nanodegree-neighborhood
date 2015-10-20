@@ -75,6 +75,10 @@ var placeModel = {
         }
         //console.log(self.markers);
     },
+    removeMarker: function(map){ 
+        var self = this;
+        console.log(self.markers);
+    },
     
     //click on marker to display place name
     addInfoWindow: function(marker, message){
@@ -90,6 +94,8 @@ var placeModel = {
 
 //ViewModel
 var ViewModel = {
+    query: ko.observable(''),
+    places: ko.observableArray(placeModel.places),
     init: function(){
         var self = this;
         //initialize the map; TO-DO:if map not applicable show error message
@@ -98,35 +104,33 @@ var ViewModel = {
 
         //add markers for places
         placeModel.addMarker(map);
-
-        //activating knockout js
-        ko.applyBindings(new self.addPlaceList(placeModel.places));
-
-        //test update list
-        self.updatePlaceList(placeModel.places);
-
+        
+        //testing removeMarker func:
+        //placeModel.removeMarker(map);
     },
-    addPlaceList: function(placeList){
-        var self = this;
-        self.places = ko.observableArray(placeList);
-        //console.log('observable array test');
+   //filter place list; get list updated; get marker updated
+    searchPlaceList: function(value){
+ 
+        var p = placeModel.places;
+        ViewModel.places.removeAll();
 
-        },
-
-    //filter place list, get list updated 
-    updatePlaceList: function(placelist){
-        var key = 'Mo';
-        for(var i = 0; i < placelist.length; i++){
-            if (key in placelist[i].name) { //search function... can not use in operator here!!!
-            console.log(placelist[i].name);
+        for(var i in p) {
+            if(p[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
+                ViewModel.places.push(p[i]);
+                console.log(ViewModel.places);
             }
         }
-    }
+   }
+        
+    
 };
-
 
 //app starts here: 
 ViewModel.init();
+//subscribe updates to query and call seachPlacelist func to filter
+ViewModel.query.subscribe(ViewModel.searchPlaceList);
+//activate knockout js
+ko.applyBindings(ViewModel);
 
-//test func:
+//test func;
 
