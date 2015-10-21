@@ -94,8 +94,8 @@ var placeModel = {
 
 //ViewModel
 var ViewModel = {
-    query: ko.observable(''),
     places: ko.observableArray(placeModel.places),
+    query: ko.observable(),
     init: function(){
         var self = this;
         //initialize the map; TO-DO:if map not applicable show error message
@@ -107,30 +107,34 @@ var ViewModel = {
         
         //testing removeMarker func:
         //placeModel.removeMarker(map);
-    },
-   //filter place list; get list updated; get marker updated
-    searchPlaceList: function(value){
- 
-        var p = placeModel.places;
-        ViewModel.places.removeAll();
-
-        for(var i in p) {
-            if(p[i].name.toLowerCase().indexOf(value.toLowerCase()) >= 0){
-                ViewModel.places.push(p[i]);
-                console.log(ViewModel.places);
-            }
-        }
-   }
-        
-    
+    }
 };
+
+ViewModel.filteredItem = ko.computed(function(){
+
+    var filter = ViewModel.query();
+    console.log(filter);
+
+    if(!filter){
+        return ViewModel.places;
+    }
+    else{
+    //ViewModel.places.removeAll();
+    var filtered = ko.utils.arrayFilter(ViewModel.places(), function(item){
+        //console.log(ViewModel.places());
+        if(item.name.toLowerCase().indexOf(filter) >= 0 ){
+            return item.name;
+        }
+    });
+    
+    return filtered;
+    }
+});
+
 
 //app starts here: 
 ViewModel.init();
-//subscribe updates to query and call seachPlacelist func to filter
-ViewModel.query.subscribe(ViewModel.searchPlaceList);
 //activate knockout js
 ko.applyBindings(ViewModel);
 
-//test func;
 
