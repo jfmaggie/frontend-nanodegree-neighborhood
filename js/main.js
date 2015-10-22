@@ -113,21 +113,23 @@ var ViewModel = {
 ViewModel.filteredItem = ko.computed(function(){
 
     var filter = ViewModel.query();
-    console.log(filter);
+    //console.log(filter);
+    if (typeof filter === "string"){ 
+        filter.toLowerCase();
+    }
 
     if(!filter){
-        return ViewModel.places;
+        return ViewModel.places();
     }
     else{
-    //ViewModel.places.removeAll();
-    var filtered = ko.utils.arrayFilter(ViewModel.places(), function(item){
-        //console.log(ViewModel.places());
-        if(item.name.toLowerCase().indexOf(filter) >= 0 ){
-            return item.name;
-        }
-    });
-    
-    return filtered;
+        var filtered = ko.utils.arrayFilter(ViewModel.places(), function(item){
+            //console.log(ViewModel.places());
+            if(item.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ){
+                return item.name;
+            }
+        });
+
+        return filtered;
     }
 });
 
@@ -136,5 +138,3 @@ ViewModel.filteredItem = ko.computed(function(){
 ViewModel.init();
 //activate knockout js
 ko.applyBindings(ViewModel);
-
-
