@@ -16,7 +16,7 @@
 
         </div>
         <ul data-bind="foreach: filteredItem">
-            <li data-bind="text: $data.name"></li>
+            <li data-bind="text: $data.name,  click: openInfoWindow"></li>
         </ul>
     </div>
     <div id="map-canvas">

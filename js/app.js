@@ -58,30 +58,28 @@ var mapModel = {
 
 //the places model
 var placeModel = function(name, loc, map) {
-      var self = this;
+  var self = this;
 	self.name = name;
 	self.loc = loc;
 	self.map = map;
 	self.marker = null;
 
 	function initialize(){
-	    self.addMarker(self.map);
+	  self.addMarker(self.map);
 
 	}
 
 	self.addMarker = function(map) {
 		self.marker = new google.maps.Marker({
-		      position: self.loc,
-		      map: map,
-		      title: self.name
+      position: self.loc,
+      map: map,
+      title: self.name,
+      animation: google.maps.Animation.DROP
 		});
 
-	 	self.marker.addListener('click', function() {
-	 		var infowindow = new google.maps.InfoWindow({
-	       		content: self.name
-	    		});
-	       	infowindow.open(self.marker.get('map'), self.marker);
-	    	});
+		self.marker.addListener('click', function() {
+ 			self.openInfoWindow();
+  	});
 	};
 
 	self.showMarker = function() {
@@ -92,31 +90,46 @@ var placeModel = function(name, loc, map) {
 		self.marker.setMap(null);
 	};
 
+	self.openInfoWindow = function() {
+		setAnimation();
+		var infoWindow = new google.maps.InfoWindow({
+     	content: self.name
+  	});
+    infoWindow.open(self.marker.get('map'), self.marker);
+	};
 
-      initialize();
+	function setAnimation() {
+		if (self.marker.getAnimation() !== null) {
+    	self.marker.setAnimation(null);
+  	} else {
+    	self.marker.setAnimation(google.maps.Animation.BOUNCE);
+  	}
+	}
+
+  initialize();
 };
 
-        //ViewModel
+//ViewModel
 var ViewModel = function() {
 	var self = this;
 
 	self.places = ko.observableArray([]);
 	self.query = ko.observable('');
 
-      function initialize() {
+  function initialize() {
 		var map = mapModel.addMap(document.getElementById('map-canvas'));
 		PLACES.forEach(function(place){
 			self.places.push(new placeModel(place.name, place.loc, map));
 		});
-       }
+  }
 
 	self.filteredItem = ko.computed(function() {
-       	var filter = self.query();
-       	self.places().forEach(function(place){
-       		place.hideMarker();
-       	});
+		var filter = self.query();
+   	self.places().forEach(function(place){
+   		place.hideMarker();
+   	});
 
-		var filtered = self.places().filter(function(place){
+		var filtered = self.places().filter(function(place) {
 			return place.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0
 		});
 
@@ -126,12 +139,11 @@ var ViewModel = function() {
 		return filtered;
 	});
 
-
-      initialize();
+  initialize();
 };
 
-        //app starts here:
-      var vm = new ViewModel();
+//app starts here:
+var vm = new ViewModel();
 
-        //activate knockout js
-       ko.applyBindings(vm);
+//activate knockout js
+ko.applyBindings(vm);
