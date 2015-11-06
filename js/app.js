@@ -85,6 +85,7 @@ var placeModel = function(name, loc, map) {
 
 		self.marker.addListener('click', function() {
  			self.openInfoWindow();
+ 			self.callYelpApi(self.name);
   	});
 	};
 
@@ -102,6 +103,46 @@ var placeModel = function(name, loc, map) {
      	content: self.name
   	});
     infoWindow.open(self.marker.get('map'), self.marker);
+	};
+
+	self.callYelpApi = function (name) {
+		// var yelp_url = 'https://api.yelp.com/v2/search/?term=mogo&location=' + encodeURIComponent('vancouver,bc') + '&cc=CA';
+		var parameters = {
+			oauth_consumer_key: YELP_KEY,
+			oauth_consumer_secret: YELP_KEY_SECRET,
+		  oauth_token: YELP_TOKEN,
+		  oauth_signature_method: 'HMAC-SHA1',
+		  oauth_version : '1.0',
+		  callback: 'cb'              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+		};
+		var message = {
+			'action': 'http://api.yelp.com/v2/search?term=' + name + '&location=' + encodeURIComponent('vancouver, bc') + '&cc=CA&limit=1',
+			'method': 'GET',
+			'parameters': parameters
+		};
+		var accessor = {
+			consumerSecret: parameters.oauth_consumer_secret,
+			tokenSecret: YELP_TOKEN_SECRET
+		};
+		OAuth.setTimestampAndNonce(message);
+		OAuth.SignatureMethod.sign(message, accessor);
+
+		parameters.oauth_signature = OAuth.percentEncode(parameters.oauth_signature);
+		// console.log(Date.now());
+		var settings = {
+			url: message.action,
+			data: parameters,
+			cache: true, //prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+		  dataType: 'jsonp',
+		  jsonpCallback: 'cb',
+			success: function(response){
+				console.log(response);
+			},
+			fail: function(){
+				console.log('fail');
+			}
+		};
+		$.ajax(settings);
 	};
 
 	function setAnimation() {
@@ -154,35 +195,6 @@ var vm = new ViewModel();
 //activate knockout js
 ko.applyBindings(vm);
 
-function nonce_generate() {
-	  return (Math.floor(Math.random() * 1e12).toString());
-	}
+//test yelp api
 
-function callYelpApi() {
-	var yelp_url = 'https://api.yelp.com/v2/search/?term=mogo&location=' + encodeURIComponent('vancouver,bc') + '&cc=CA';
-	var parameters = {
-		oauth_consumer_key: YELP_KEY,
-    oauth_token: YELP_TOKEN,
-    oauth_nonce: nonce_generate(),
-    oauth_timestamp: Math.floor(Date.now()/1000),
-    oauth_signature_method: 'HMAC-SHA1',
-    oauth_version : '1.0',
-    callback: 'cb'              // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
-	};
-	var encodedSignature = oauthSignature.generate('GET', yelp_url, parameters, YELP_KEY_SECRET, YELP_TOKEN_SECRET);
-  parameters.oauth_signature = encodedSignature;
-	var settings = {
-		url: yelp_url,
-		data: parameters,
-		// cache: true,
-		dataType: 'jsonp',
-		success: function(response){
-			console.log(response);
-		},
-		fail: function(){
-			console.log('fail');
-		}
-	};
-	$.ajax(settings);
-}
-callYelpApi();
+
