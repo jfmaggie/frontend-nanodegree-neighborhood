@@ -66,6 +66,7 @@ var placeModel = function(name, loc, map) {
 	self.loc = loc;
 	self.map = map;
 	self.marker = null;
+	self.infoWindow = null;
 
 	function initialize() {
 		self.addMarker(self.map);
@@ -81,7 +82,6 @@ var placeModel = function(name, loc, map) {
 
 		self.marker.addListener('click', function() {
  			self.openInfoWindow();
- 			self.callYelpApi(self.name);
   		});
 	};
 
@@ -95,14 +95,14 @@ var placeModel = function(name, loc, map) {
 
 	self.openInfoWindow = function() {
 		setAnimation(3000);
-		var infoWindow = new google.maps.InfoWindow({
-     		content: self.name
-  		});
-    	infoWindow.open(self.marker.get('map'), self.marker);
+		console.log('open '+ self.name +' window'); //for testing
+
+		self.infoWindow = new google.maps.InfoWindow();
+		self.callYelpApi(self.name);
+		self.infoWindow.open(self.marker.get('map'), self.marker);
 	};
 
 	self.callYelpApi = function (name) {
-		// var yelp_url = 'https://api.yelp.com/v2/search/?term=mogo&location=' + encodeURIComponent('vancouver,bc') + '&cc=CA';
 		var parameters = {
 			oauth_consumer_key: YELP_KEY,
 			oauth_consumer_secret: YELP_KEY_SECRET,
@@ -131,18 +131,11 @@ var placeModel = function(name, loc, map) {
 			cache: true, //prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
 		  	dataType: 'jsonp',
 		  	jsonpCallback: 'cb',
-			success: function(response){
-				console.log(response.businesses);
-				if(response.businesses.length != 0){
-					response.businesses.forEach(function(item){
-						// do something here
-					});
-				} else {
-					console.log('There is no business result available on Yelp!');
-				}
+			success: function (response) {
+				callYelpSuccess(response);
 			},
 			fail: function(){
-				console.log('fail');
+				return 'fail';
 			}
 		};
 		$.ajax(settings);
@@ -157,6 +150,16 @@ var placeModel = function(name, loc, map) {
 				self.marker.setAnimation();
 			}, timeout);
 		}
+	}
+
+	function callYelpSuccess(res) {
+		var message = '';
+		if( res.businesses.length != 0 ) {
+			message = res.businesses[0].name; //message needs TO BE UPDATED based on the response
+		} else {
+			message = 'There is no info about ' + self.name + ' on Yelp';
+		}
+		self.infoWindow.setContent(message);
 	}
 
   	initialize();
