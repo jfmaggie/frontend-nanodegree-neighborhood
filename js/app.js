@@ -1,31 +1,31 @@
 PLACES = [
 	{
-		'name': 'Mobify',
-		'loc': { lat: 49.277866, lng: -123.119140 }
+		'name': 'Blue Water Cafe',
+		'loc': { lat: 49.276238, lng: -123.121185 }
  	},
  	{
-	 	'name': 'Paysavvy',
-    	'loc': { lat: 49.287559, lng: -123.105795 }
+	 	'name': 'Chambar',
+    	'loc': { lat: 49.280344, lng: -123.109680 }
 	},
 	{
-		'name': 'Launch Academy',
-		'loc': { lat: 49.284983, lng: -123.107684 }
+		'name': 'West',
+		'loc': { lat: 49.260260, lng: -123.139111 }
 	},
 	{
-		'name': 'Unbounce',
-		'loc': { lat: 49.281552, lng: -123.114606 }
+		'name': 'Miku',
+		'loc': { lat: 49.287112, lng: -123.112272 }
 	},
 	{
-		'name': 'Launch Labs',
-		'loc': { lat: 49.286095, lng: -123.116745 }
+		'name': 'Hawksworth',
+		'loc': { lat: 49.283652, lng: -123.118985 }
 	},
 	{
-		'name': 'Hootsuite',
-		'loc': { lat: 49.264166, lng: -123.104376 }
+		'name': 'Nuba',
+		'loc': { lat: 49.284153, lng: -123.109142 }
 	},
 	{
-		'name': 'Mogo',
-		'loc': { lat: 49.286325, lng: -123.114445 }
+		'name': 'Pourhouse',
+		'loc': { lat: 49.286171, lng: -123.108370 }
 	}
 ];
 
@@ -154,8 +154,9 @@ var placeModel = function(name, loc, map) {
 
 	function callYelpSuccess(res) {
 		var message = '';
+		console.log(res);
 		if( res.businesses.length != 0 ) {
-			message = res.businesses[0].name; //message needs TO BE UPDATED based on the response
+			message = res.businesses[0].name + '<br />' + '<img src=' + res.businesses[0].image_url + '>'; //message needs TO BE UPDATED based on the response
 		} else {
 			message = 'There is no info about ' + self.name + ' on Yelp';
 		}
