@@ -35,8 +35,8 @@ YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE';
 YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun';
 YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
 
-// tracking current marker
-var currentMarker = [];
+//
+var otherInfoWindowObj = null;
 
 //the map model
 var mapModel = {
@@ -97,20 +97,25 @@ var placeModel = function(name, loc, map) {
 	};
 
 	self.openInfoWindow = function() {
-		setAnimation(3000);
-		console.log('open '+ self.name +' window'); //for testing
+		// marker animation
+		setAnimation(1500);
+
+		// set clicked marker as map center
+		self.marker.get('map').setCenter(self.loc);
+
+		// console.log('open '+ self.name +' window'); //for testing
 		// console.log(self);
 
 		// keep only one info window open
-		closeOtherOpenedInfo(currentMarker);
+		closeOtherOpenedInfoWindow(otherInfoWindowObj);
 
 		// get data from yelp and display in the infowindow
 		self.infoWindow = new google.maps.InfoWindow();
 		self.callYelpApi(self.name);
 		self.infoWindow.open(self.marker.get('map'), self.marker);
-		currentMarker.push(self.marker);
+		otherInfoWindowObj = self.infoWindow;
 
-		// console.log(currentMarker);
+		// console.log(otherInfoWindowObj);
 	};
 
 	self.callYelpApi = function (name) {
@@ -174,15 +179,14 @@ var placeModel = function(name, loc, map) {
 		self.infoWindow.setContent(message);
 	}
 
-	function closeOtherOpenedInfo(curMarker) {
-		if (curMarker.length !== 0) {
-			// console.log('current Marker: ');
-			// console.log(curMarker);
-			curMarker.forEach(function(eachOne){
-				eachOne.setMap(null);
-			});
+	function closeOtherOpenedInfoWindow(cur) {
+		if (cur !== null) {
+			// console.log('current Info Window: ');
+			// console.log(cur);
+			cur.setMap(null);
 		}
 	}
+
   	initialize();
 };
 
