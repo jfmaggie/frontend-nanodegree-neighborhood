@@ -145,8 +145,8 @@ var placeModel = function(name, loc, map) {
 			url: message.action,
 			data: parameters,
 			cache: true, //prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
-		  	dataType: 'jsonp',
-		  	jsonpCallback: 'cb',
+			dataType: 'jsonp',
+			jsonpCallback: 'cb',
 			success: function (response) {
 				callYelpSuccess(response);
 			},
