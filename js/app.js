@@ -198,6 +198,7 @@ var ViewModel = function() {
 
   	function initialize() {
 		var map = mapModel.addMap(document.getElementById('map-canvas'));
+
 		PLACES.forEach(function(place){
 			self.places.push(new placeModel(place.name, place.loc, map));
 		});
