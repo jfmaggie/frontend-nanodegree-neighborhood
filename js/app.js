@@ -151,7 +151,7 @@ var placeModel = function(name, loc, map) {
 				callYelpSuccess(response);
 			},
 			fail: function(){
-				return 'fail';
+				callYelpFail();
 			}
 		};
 		$.ajax(settings);
@@ -176,6 +176,11 @@ var placeModel = function(name, loc, map) {
 		} else {
 			message = 'There is no info about ' + self.name + ' on Yelp';
 		}
+		self.infoWindow.setContent(message);
+	}
+
+	function callYelpFail() {
+		var message = 'Unable to reach Yelp';
 		self.infoWindow.setContent(message);
 	}
 
