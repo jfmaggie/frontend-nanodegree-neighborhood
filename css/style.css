@@ -5,9 +5,9 @@ html, body {
 
 #map-canvas {
 	width: 100%;
-    height: 100%;
-    padding: 0px;
-    z-index: 0;
+  height: 100%;
+  padding: 0px;
+  z-index: 0;
 }
 
 #place-list {
@@ -32,4 +32,9 @@ html, body {
 
 #place-list .input-group {
 	margin-bottom: 0.5em;
+}
+
+li.list-group-item:hover {
+	background-color: #eee;
+	font-size: 150%;
 }

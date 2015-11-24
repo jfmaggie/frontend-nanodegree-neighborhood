@@ -2,56 +2,55 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1">
-    <title>Neighborhood</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewpoint" content="width=device-width, initial-scale=1">
+  <title>Neighborhood</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div id="place-list">
-            <label for="pac-input"></label>
-            <div class="input-group">
-                <span class="input-group-addon" id="pac-input">Search</span>
+  <div class="container-fluid">
+    <div id="place-list">
+      <label for="pac-input"></label>
+      <div class="input-group">
+          <span class="input-group-addon" id="pac-input">Search</span>
 
-                <input id="pac-input" class="controls, form-control" type="search" placeholder="Featured restaurants" data-bind="value: query, valueUpdate:'keyup'" aria-describedby="basic-addon3">
-            </div>
-            <ul class="list-group" data-bind="foreach: filteredItem">
-                <li class="list-group-item" data-bind="text: $data.name,  click: openInfoWindow"></li>
-            </ul>
-        </div>
+          <input id="pac-input" class="controls, form-control" type="search" placeholder="Featured restaurants" data-bind="value: query, valueUpdate:'keyup'" aria-describedby="basic-addon3">
+      </div>
+      <ul class="list-group" data-bind="foreach: filteredItem">
+        <li class="list-group-item" data-bind="text: $data.name,  click: openInfoWindow"></li>
+      </ul>
     </div>
-    <div id="map-canvas"></div>
-    <script src="lib/jquery-1.11.3.min.js"></script>
-    <script src="lib/knockout-3.3.0.js"></script>
-
-    <!-- Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!-- Google Map API -->
-    <script>
-        $.get("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places",function(){
-            var googlemapsscript = document.createElement('script');
-            googlemapsscript.type = 'text/javascript';
-            googlemapsscript.src = 'js/app.js';
-            document.body.appendChild(googlemapsscript);
-        }, 'jsonp').fail(function(){
-            $('.container-fluid').append('<p>Google maps can not be loaded.</p>')
-        });
-    </script>
-    <!-- Oauth -->
-    <script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
-    <script src="http://pajhome.org.uk/crypt/md5/sha1.js"></script>
+  </div>
+  <div id="map-canvas"></div>
+  <script src="lib/jquery-1.11.3.min.js"></script>
+  <script src="lib/knockout-3.3.0.js"></script>
+  <!-- Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- Google Map API -->
+  <script>
+    $.get("https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places", function(){
+        var googlemapsscript = document.createElement('script');
+        googlemapsscript.type = 'text/javascript';
+        googlemapsscript.src = 'js/app.js';
+        document.body.appendChild(googlemapsscript);
+      }, 'jsonp').fail(function(){
+        $('.container-fluid').append('<p>Google maps can not be loaded.</p>')
+    });
+  </script>
+  <!-- Oauth -->
+  <script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+  <script src="http://pajhome.org.uk/crypt/md5/sha1.js"></script>
 </body>
 
 </html>
