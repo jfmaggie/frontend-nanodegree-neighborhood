@@ -1,5 +1,5 @@
 # Neighbourhood 
-A single-page application in the responive manner featuring a map of some restaurants in Vancouver, BC for my FEND at Udacity.  
+A responive single-page application featuring a map of some restaurants in Vancouver, BC for my FEND at Udacity.  
 
 ### App Functionality 
 - __Search Bar:__ Filters both the restaurants in the list view and the markers on the map.
