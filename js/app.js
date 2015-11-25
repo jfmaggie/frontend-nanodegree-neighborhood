@@ -89,14 +89,6 @@ var placeModel = function(name, loc, map) {
 		});
 	};
 
-	self.showMarker = function() {
-		self.marker.setMap(self.map);
-	};
-
-	self.hideMarker = function() {
-		self.marker.setMap(null);
-	};
-
 	self.openInfoWindow = function() {
 		// marker animation
 		setAnimation(1500);
@@ -213,7 +205,8 @@ var ViewModel = function() {
 	self.filteredItem = ko.computed(function() {
 		var filter = self.query();
  		self.places().forEach(function(place){
- 			place.hideMarker();
+ 			// place.hideMarker();
+ 			place.marker.setVisible(false);
  		});
 
 		var filtered = self.places().filter(function(place) {
@@ -221,7 +214,8 @@ var ViewModel = function() {
 		});
 
 		filtered.forEach(function(place){
-			place.showMarker();
+			// place.showMarker();
+			place.marker.setVisible(true);
 		});
 		return filtered;
 	});
