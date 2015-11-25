@@ -6,7 +6,7 @@ var places = [
  	},
  	{
 	 	'name': 'Chambar',
-    	'loc': { lat: 49.280344, lng: -123.109680 }
+    'loc': { lat: 49.280344, lng: -123.109680 }
 	},
 	{
 		'name': 'West',
@@ -32,12 +32,12 @@ var places = [
 
 // Yelp token/secret
 var YELP_KEY = 'mQibNaJT6QaNZKdz8XinUA',
-		YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE',
-		YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun',
-		YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
+	YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE',
+	YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun',
+	YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
 
-//
-var otherInfoWindowObj = null;
+// global variable to keep only one info window open
+var infoWindow = null;
 
 //the map model
 var mapModel = {
@@ -70,7 +70,7 @@ var placeModel = function(name, loc, map) {
 	self.loc = loc;
 	self.map = map;
 	self.marker = null;
-	self.infoWindow = null;
+	// self.infoWindow = null;
 
 	function initialize() {
 		self.addMarker(self.map);
@@ -108,13 +108,13 @@ var placeModel = function(name, loc, map) {
 		// console.log(self);
 
 		// keep only one info window open
-		closeOtherOpenedInfoWindow(otherInfoWindowObj);
+		closeOtherOpenedInfoWindow(infoWindow);
 
 		// get data from yelp and display in the infowindow
-		self.infoWindow = new google.maps.InfoWindow();
+		infoWindow = new google.maps.InfoWindow();
 		self.callYelpApi(self.name);
-		self.infoWindow.open(self.marker.get('map'), self.marker);
-		otherInfoWindowObj = self.infoWindow;
+		infoWindow.open(self.marker.get('map'), self.marker);
+		// otherInfoWindowObj = self.infoWindow;
 
 		// console.log(otherInfoWindowObj);
 	};
@@ -142,6 +142,7 @@ var placeModel = function(name, loc, map) {
 
 		parameters.oauth_signature = OAuth.percentEncode(parameters.oauth_signature);
 		// console.log(Date.now());
+		var yelpTimeout = setTimeout(callYelpFail, 8000); //error handling for ajax jsonp
 		var settings = {
 			url: message.action,
 			data: parameters,
@@ -150,11 +151,10 @@ var placeModel = function(name, loc, map) {
 			jsonpCallback: 'cb',
 			success: function (response) {
 				callYelpSuccess(response);
-			},
-			fail: function(){
-				callYelpFail();
+				clearTimeout(yelpTimeout); //error handling for ajax jsonp
 			}
 		};
+
 		$.ajax(settings);
 	};
 
@@ -177,12 +177,12 @@ var placeModel = function(name, loc, map) {
 		} else {
 			message = 'There is no info about ' + self.name + ' on Yelp';
 		}
-		self.infoWindow.setContent(message);
+		infoWindow.setContent(message);
 	}
 
 	function callYelpFail() {
 		var message = 'Unable to reach Yelp';
-		self.infoWindow.setContent(message);
+		infoWindow.setContent(message);
 	}
 
 	function closeOtherOpenedInfoWindow(cur) {
