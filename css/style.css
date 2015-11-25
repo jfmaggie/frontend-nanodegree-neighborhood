@@ -1,13 +1,14 @@
-html, body {
+html,
+body {
 	height: 100%;
 	width: 100%;
 }
 
 #map-canvas {
 	width: 100%;
-  height: 100%;
-  padding: 0px;
-  z-index: 0;
+	height: 100%;
+	padding: 0px;
+	z-index: 0;
 }
 
 #place-list {
@@ -26,7 +27,7 @@ html, body {
 	}
 	#map-canvas {
 		width: 100%;
-	    height: 100%;
+		height: 100%;
 	}
 }
 
