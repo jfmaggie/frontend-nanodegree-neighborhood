@@ -22,3 +22,11 @@ A responive single-page application featuring a map of some restaurants in Vanco
 - [Udacity ND discussion forum](https://discussions.udacity.com/categories) 
 - [Udacity Vancouver Meetup](http://www.meetup.com/Udacity-Vancouver-Meetup/) 
 -  Hot Developer Bitsofbits
+
+#### Udacity Code Review And Feedback 
+- [Always start a new line for each selector and declaration](https://udacity.github.io/frontend-nanodegree-styleguide/css.html#selector-declaration-separation)
+- [The benefits of using a CDN](https://gtmetrix.com/why-use-a-cdn.html)
+- [CDN library](https://cdnjs.com/libraries)
+- [Instructions of handling Google maps asynchronously ](https://discussions.udacity.com/t/handling-google-maps-in-async-and-fallback/34282)
+- [Make map responsive stackoverflow](https://stackoverflow.com/questions/1556921/google-map-api-v3-set-bounds-and-center)
+- [Set bounce for google map](https://developers.google.com/maps/documentation/javascript/reference?hl=en#LatLng)

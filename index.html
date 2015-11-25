@@ -38,7 +38,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <!-- Google Map API -->
   <script>
-    function googleSuccess() {}
+    function googleSuccess() {
+      console.log('Google maps is loaded.');
+    }
     function googleError() {
       if(typeof google === 'undefined'){
         document.getElementById("map-canvas").innerHTML="Google Map is not available now. <br />Please refresh the page.";

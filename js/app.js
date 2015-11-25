@@ -5,8 +5,8 @@ var places = [
 		'loc': { lat: 49.276238, lng: -123.121185 }
  	},
  	{
-	 	'name': 'Chambar',
-    'loc': { lat: 49.280344, lng: -123.109680 }
+		'name': 'Chambar',
+		'loc': { lat: 49.280344, lng: -123.109680 }
 	},
 	{
 		'name': 'West',
@@ -31,10 +31,10 @@ var places = [
 ];
 
 // Yelp token/secret
-var YELP_KEY = 'mQibNaJT6QaNZKdz8XinUA',
-	YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE',
-	YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun',
-	YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
+var YELP_KEY = 'mQibNaJT6QaNZKdz8XinUA';
+var YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE';
+var YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun';
+var YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
 
 // global variable to keep only one info window open
 var infoWindow = null;
