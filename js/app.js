@@ -1,4 +1,5 @@
-PLACES = [
+"use strict";
+var places = [
 	{
 		'name': 'Blue Water Cafe',
 		'loc': { lat: 49.276238, lng: -123.121185 }
@@ -30,36 +31,36 @@ PLACES = [
 ];
 
 // Yelp token/secret
-YELP_KEY = 'mQibNaJT6QaNZKdz8XinUA';
-YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE';
-YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun';
-YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
+var YELP_KEY = 'mQibNaJT6QaNZKdz8XinUA',
+		YELP_KEY_SECRET = 'VksxaiJCJB29B6NliQUSnClrpIE',
+		YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun',
+		YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
 
 //
 var otherInfoWindowObj = null;
 
 //the map model
 var mapModel = {
-    mapOptions: {
-        center: { lat: 49.276960, lng: -123.111967 },
-        zoom: 13,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            mapTypeIds: [
-                google.maps.MapTypeId.ROADMAP,
-                google.maps.MapTypeId.TERRAIN,
-                google.maps.MapTypeId.SATELLITE,
-                google.maps.MapTypeId.HYBRID
-            ]
-        }
-    },
-    //addMap: function return a map object
-    addMap: function(mapid) {
-        var self = this;
-        var map = new google.maps.Map(mapid, self.mapOptions);
-        return map;
+  mapOptions: {
+    center: { lat: 49.276960, lng: -123.111967 },
+    zoom: 13,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.TERRAIN,
+        google.maps.MapTypeId.SATELLITE,
+        google.maps.MapTypeId.HYBRID
+      ]
     }
+  },
+  //addMap: function return a map object
+  addMap: function(mapid) {
+    var self = this;
+    var map = new google.maps.Map(mapid, self.mapOptions);
+    return map;
+  }
 };
 
 //the place model
@@ -77,15 +78,15 @@ var placeModel = function(name, loc, map) {
 
 	self.addMarker = function(map) {
 		self.marker = new google.maps.Marker({
-      		position: self.loc,
-      		map: map,
-      		title: self.name,
-      		animation: google.maps.Animation.DROP
+			position: self.loc,
+			map: map,
+			title: self.name,
+			animation: google.maps.Animation.DROP
 		});
 
 		self.marker.addListener('click', function() {
  			self.openInfoWindow();
-  		});
+		});
 	};
 
 	self.showMarker = function() {
@@ -171,7 +172,7 @@ var placeModel = function(name, loc, map) {
 	function callYelpSuccess(res) {
 		var message = '';
 		// console.log(res); // make response visible
-		if( res.businesses.length != 0 ) {
+		if( res.businesses.length !== 0 ) {
 			message = res.businesses[0].name + '<br />' + '<img src=' + res.businesses[0].image_url + '>'; //message needs TO BE UPDATED based on the response
 		} else {
 			message = 'There is no info about ' + self.name + ' on Yelp';
@@ -192,7 +193,7 @@ var placeModel = function(name, loc, map) {
 		}
 	}
 
-  	initialize();
+  initialize();
 };
 
 //ViewModel
@@ -201,22 +202,22 @@ var ViewModel = function() {
 	self.places = ko.observableArray([]);
 	self.query = ko.observable('');
 
-  	function initialize() {
+	function initialize() {
 		var map = mapModel.addMap(document.getElementById('map-canvas'));
 
-		PLACES.forEach(function(place){
+		places.forEach(function(place){
 			self.places.push(new placeModel(place.name, place.loc, map));
 		});
-  	}
+	}
 
 	self.filteredItem = ko.computed(function() {
 		var filter = self.query();
-   		self.places().forEach(function(place){
-   			place.hideMarker();
-   		});
+ 		self.places().forEach(function(place){
+ 			place.hideMarker();
+ 		});
 
 		var filtered = self.places().filter(function(place) {
-			return place.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0
+			return place.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
 		});
 
 		filtered.forEach(function(place){
@@ -225,7 +226,7 @@ var ViewModel = function() {
 		return filtered;
 	});
 
-  	initialize();
+	initialize();
 };
 
 //app starts here:
