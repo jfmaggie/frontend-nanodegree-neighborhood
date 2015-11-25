@@ -41,26 +41,26 @@ var infoWindow = null;
 
 //the map model
 var mapModel = {
-  mapOptions: {
-    center: { lat: 49.276960, lng: -123.111967 },
-    zoom: 13,
-    mapTypeControl: true,
-    mapTypeControlOptions: {
-      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-      mapTypeIds: [
-        google.maps.MapTypeId.ROADMAP,
-        google.maps.MapTypeId.TERRAIN,
-        google.maps.MapTypeId.SATELLITE,
-        google.maps.MapTypeId.HYBRID
-      ]
-    }
-  },
+	mapOptions: {
+		center: { lat: 49.276960, lng: -123.111967 },
+		zoom: 13,
+		mapTypeControl: true,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			mapTypeIds: [
+				google.maps.MapTypeId.ROADMAP,
+				google.maps.MapTypeId.TERRAIN,
+				google.maps.MapTypeId.SATELLITE,
+				google.maps.MapTypeId.HYBRID
+			]
+		}
+	},
   //addMap: function return a map object
-  addMap: function(mapid) {
-    var self = this;
-    var map = new google.maps.Map(mapid, self.mapOptions);
-    return map;
-  }
+	addMap: function(mapid) {
+		var self = this;
+		var map = new google.maps.Map(mapid, self.mapOptions);
+		return map;
+	}
 };
 
 //the place model
