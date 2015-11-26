@@ -40,13 +40,20 @@
   <!-- Google Map API -->
   <script>
     var googleMapUrl = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places';
-    $.getScript(googleMapUrl).done(function() {
-      var myScript = document.createElement('script');
-          myScript.type = 'text/javascript';
-          myScript.src = 'js/app.js';
-          document.body.appendChild(myScript);
-      }).fail(function() {
-      document.getElementById("map-canvas").innerHTML="Google Map is not available now. <br />Please refresh the page.";
+    $.ajax({
+      url: googleMapUrl,
+      success: function() {
+        var myScript = document.createElement('script');
+        myScript.type = 'text/javascript';
+        myScript.src = 'js/app.js';
+        document.body.appendChild(myScript);
+      },
+      error: function() {
+        document.getElementById("map-canvas").innerHTML="<p>Google Map is not available now. <br>Please refresh the page.</p>";
+      },
+      timeout: 1000,
+      dataType: 'script',
+      crossDomain: 'true'
     });
   </script>
   <!-- Oauth -->
