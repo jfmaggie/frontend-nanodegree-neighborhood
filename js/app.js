@@ -1,4 +1,5 @@
 "use strict";
+
 var places = [
 	{
 		'name': 'Blue Water Cafe',
@@ -196,7 +197,6 @@ var ViewModel = function() {
 
 	function initialize() {
 		var map = mapModel.addMap(document.getElementById('map-canvas'));
-
 		places.forEach(function(place){
 			self.places.push(new placeModel(place.name, place.loc, map));
 		});
@@ -225,6 +225,4 @@ var ViewModel = function() {
 
 //app starts here:
 var vm = new ViewModel();
-
-//activate knockout js
 ko.applyBindings(vm);

@@ -36,22 +36,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-debug.js"></script>
   <!-- Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
   <!-- Google Map API -->
   <script>
-    function googleSuccess() {
-      console.log('Google maps is loaded.');
-    }
-    function googleError() {
-      if(typeof google === 'undefined'){
-        document.getElementById("map-canvas").innerHTML="Google Map is not available now. <br />Please refresh the page.";
-      }
-    }
+    var googleMapUrl = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places';
+    $.getScript(googleMapUrl).done(function() {
+      var myScript = document.createElement('script');
+          myScript.type = 'text/javascript';
+          myScript.src = 'js/app.js';
+          document.body.appendChild(myScript);
+      }).fail(function() {
+      document.getElementById("map-canvas").innerHTML="Google Map is not available now. <br />Please refresh the page.";
+    });
   </script>
-  <script async src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places%26callback=googleSuccess" onerror="googleError()"></script>
   <!-- Oauth -->
   <script src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
   <script src="http://pajhome.org.uk/crypt/md5/sha1.js"></script>
-  <script src="js/app.js"></script>
 </body>
 
 </html>
