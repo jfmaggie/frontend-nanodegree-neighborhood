@@ -38,7 +38,8 @@ var YELP_TOKEN = 'jUQ68PDom3T0lpOIa2K1VyM964196tun';
 var YELP_TOKEN_SECRET = 'AzQgSea38SUPEKnee5WgcBY53fk';
 
 // global variable to keep only one info window open
-var infoWindow = null;
+var infoWindow = new google.maps.InfoWindow();
+var bounds = new google.maps.LatLngBounds();
 
 //the map model
 var mapModel = {
@@ -60,6 +61,7 @@ var mapModel = {
 	addMap: function(mapid) {
 		var self = this;
 		var map = new google.maps.Map(mapid, self.mapOptions);
+
 		return map;
 	}
 };
@@ -71,10 +73,10 @@ var placeModel = function(name, loc, map) {
 	self.loc = loc;
 	self.map = map;
 	self.marker = null;
-	// self.infoWindow = null;
 
 	function initialize() {
 		self.addMarker(self.map);
+
 	}
 
 	self.addMarker = function(map) {
@@ -88,6 +90,8 @@ var placeModel = function(name, loc, map) {
 		self.marker.addListener('click', function() {
  			self.openInfoWindow();
 		});
+
+		bounds.extend(new google.maps.LatLng(self.loc.lat, self.loc.lng));
 	};
 
 	self.openInfoWindow = function() {
@@ -97,19 +101,9 @@ var placeModel = function(name, loc, map) {
 		// set clicked marker as map center
 		self.marker.get('map').setCenter(self.loc);
 
-		// console.log('open '+ self.name +' window'); //for testing
-		// console.log(self);
-
-		// keep only one info window open
-		closeOtherOpenedInfoWindow(infoWindow);
-
-		// get data from yelp and display in the infowindow
-		infoWindow = new google.maps.InfoWindow();
+		infoWindow.setContent('Loading...');
 		self.callYelpApi(self.name);
 		infoWindow.open(self.marker.get('map'), self.marker);
-		// otherInfoWindowObj = self.infoWindow;
-
-		// console.log(otherInfoWindowObj);
 	};
 
 	self.callYelpApi = function (name) {
@@ -134,7 +128,7 @@ var placeModel = function(name, loc, map) {
 		OAuth.SignatureMethod.sign(message, accessor);
 
 		parameters.oauth_signature = OAuth.percentEncode(parameters.oauth_signature);
-		// console.log(Date.now());
+
 		var yelpTimeout = setTimeout(callYelpFail, 8000); //error handling for ajax jsonp
 		var settings = {
 			url: message.action,
@@ -164,7 +158,6 @@ var placeModel = function(name, loc, map) {
 
 	function callYelpSuccess(res) {
 		var message = '';
-		// console.log(res); // make response visible
 		if( res.businesses.length !== 0 ) {
 			message = res.businesses[0].name + '<br />' + '<img src=' + res.businesses[0].image_url + '>'; //message needs TO BE UPDATED based on the response
 		} else {
@@ -178,14 +171,6 @@ var placeModel = function(name, loc, map) {
 		infoWindow.setContent(message);
 	}
 
-	function closeOtherOpenedInfoWindow(cur) {
-		if (cur !== null) {
-			// console.log('current Info Window: ');
-			// console.log(cur);
-			cur.setMap(null);
-		}
-	}
-
   initialize();
 };
 
@@ -197,15 +182,18 @@ var ViewModel = function() {
 
 	function initialize() {
 		var map = mapModel.addMap(document.getElementById('map-canvas'));
+
 		places.forEach(function(place){
 			self.places.push(new placeModel(place.name, place.loc, map));
 		});
+		window.onresize = function() {
+			map.fitBounds(bounds);
+		};
 	}
 
 	self.filteredItem = ko.computed(function() {
 		var filter = self.query();
  		self.places().forEach(function(place){
- 			// place.hideMarker();
  			place.marker.setVisible(false);
  		});
 
@@ -214,7 +202,6 @@ var ViewModel = function() {
 		});
 
 		filtered.forEach(function(place){
-			// place.showMarker();
 			place.marker.setVisible(true);
 		});
 		return filtered;

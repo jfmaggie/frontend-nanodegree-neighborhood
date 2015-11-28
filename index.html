@@ -40,6 +40,9 @@
   <!-- Google Map API -->
   <script>
     var googleMapUrl = 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAR5WMRavTsYBJGLTZunaQhYw-KeSj9F3Q&libraries=places';
+    var googleTimeout = setTimeout(function() {
+        document.getElementById("map-canvas").innerHTML="<p>Google Map is not available now. <br>Please refresh the page.</p>";
+      }, 3000);
     $.ajax({
       url: googleMapUrl,
       success: function() {
@@ -47,11 +50,8 @@
         myScript.type = 'text/javascript';
         myScript.src = 'js/app.js';
         document.body.appendChild(myScript);
+        clearTimeout(googleTimeout);
       },
-      error: function() {
-        document.getElementById("map-canvas").innerHTML="<p>Google Map is not available now. <br>Please refresh the page.</p>";
-      },
-      timeout: 1000,
       dataType: 'script',
       crossDomain: 'true'
     });
