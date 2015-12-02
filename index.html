@@ -21,10 +21,9 @@
 <body>
   <div class="container-fluid">
     <div id="place-list">
-      <label for="pac-input"></label>
       <div class="input-group">
           <span class="input-group-addon" id="pac-input">Search</span>
-          <input id="pac-input" class="controls, form-control" type="search" placeholder="Featured restaurants" data-bind="value: query, valueUpdate:'keyup'" aria-describedby="basic-addon3">
+          <input class="controls, form-control" type="search" placeholder="Featured restaurants" data-bind="value: query, valueUpdate:'keyup'" aria-describedby="pac-input">
       </div>
       <ul class="list-group" data-bind="foreach: filteredItem">
         <li class="list-group-item" data-bind="text: $data.name,  click: openInfoWindow"></li>
